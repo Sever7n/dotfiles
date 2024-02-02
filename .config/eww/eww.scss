@@ -1,0 +1,61 @@
+* {
+  all: unset;
+}
+
+.bar {
+  background-color: #24273a;
+  font: 14 Fira;
+  border-radius: 10;
+  color: #b7bdf8;
+} 
+
+.cal {
+  background-color: #24273a;
+  font: 14 Fira;
+  border-radius: 10;
+  color: #b7bdf8;
+  border-color: #b7bdf8;
+  border-style: solid;
+  border-width: 2px;
+} 
+
+.left {
+  margin-left: 10px;
+}
+
+.time {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.power {
+  font-family: Material Design Icons;
+  font-size: 20;
+  color: #ed8796;
+  margin-left: 5px;
+}
+
+.power_rev {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+scale trough {
+  all: unset;
+  background-color: #22242b;
+  box-shadow: 0 2px 3px 2px #06060b;
+  border-radius: 10px;
+  min-height: 10px;
+  min-width: 70px;
+  margin: 0px 10px 0px 0px;
+}
+
+.bar trough highlight {
+  background: #a6da95;
+  border-radius: 10px;
+}
+.icon {
+  font-family: FiraCode Nerd Font;
+  font-size: 20;
+  margin: 0px 10px 0px 10px;
+}

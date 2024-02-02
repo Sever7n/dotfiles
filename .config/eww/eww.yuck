@@ -1,0 +1,157 @@
+(include "dashboard/dashboard.yuck")
+
+(defwindow bar
+    :monitor 1
+    :class "bar"
+    :geometry (
+        geometry
+            :x "0%"
+            :y "5px"
+            :width "1910"
+            :height "25px"
+            :anchor "top center"
+    )
+    :stacking "fg"
+    :reserve (struts :distance "40px" :side "top")
+    :exclusive true
+    (
+        centerbox :orientation "h"
+        (left)
+        (menu)
+        (right)
+    )
+)
+
+(defwidget launcher []
+    (button :style "margin-left: -5px; margin-right: 15px; font-size: 22" :halign "center" "")
+)
+
+(defwidget menu []
+    (box
+        :halign "start"
+        (app :app "firefox" :icon "")
+        (app :app "alacritty" :icon "")
+        (app :app "dolphin" :icon "")
+        (app :app "kitty nvim" :icon "󱞁")
+        (app :app "thunderbird" :icon "󰇮")
+        (app :app "alacritty -e btop" :icon "󱃷")
+    )
+)
+
+(defwidget app [icon app]
+    (button
+        :onclick "./launch.sh ${app}"
+        :class "icon"
+        :tooltip app
+        icon
+    )
+)
+
+(defwidget left []
+    (box
+        :class "left"
+        :halign "start"
+        :spacing 5
+        :space-evenly false
+        (launcher)
+        (wrk :id 1)
+        (wrk :id 2)
+        (wrk :id 3)
+        (wrk :id 4)
+        (wrk :id 5)
+        (wrk :id 6)
+        (wrk :id 7)
+        (wrk :id 8)
+        (wrk :id 9)
+        (wrk :id 10)
+    )
+)
+
+(defwidget right []
+    (box
+        :class "right"
+        :halign "end"
+        :orientation "h"
+        :space-evenly false
+        (volume)
+        (button :onclick "./eww_toggle cal" :class "time" time)
+        (power)
+    )
+)
+(defwidget wrk [id]
+    (button :onclick "./hypr_spaces ${id}" {id == active ? "●" : "○"})
+)
+
+(defwidget volume []
+    (ctrl
+        :icon { muted ? "󰎊" : "" }
+        :reveal vol_reveal
+        :reveal_str "vol_reveal"
+        :value volume_percent
+        :onchange "pamixer --set-volume {}"
+        :click "./launch.sh pavucontrol"
+        :rightclick "pamixer --toggle-mute"
+    )
+)
+
+(defwidget ctrl [icon reveal reveal_str ?click ?rightclick value onchange]
+    (box :class "module-2"
+        :space-evenly "false" :orientation "h" :spacing "3" 
+        (button   :onclick click :onrightclick rightclick :class "icon" icon)
+        (scale    :class "bar"
+            :value value
+            :orientation "h"
+	          :max 101
+	          :min 0
+	          :onchange onchange
+        )
+    )
+)
+
+(defwidget power []
+    (eventbox :onhover "eww update power_reveal=true" :onhoverlost "eww update power_reveal=false"
+        (box :class "power_rev"
+            (button :class "power" :onclick "shutdown now" "⏻")
+            (revealer :transition "slideright"
+                :reveal power_reveal
+                :duration "100ms"
+                (box
+                    :style "margin-left: 2px; font-size: 24"
+                    (button :class "power" :onclick "reboot" "󰑐")
+                )
+            )
+        )
+    )
+)
+
+(defwindow cal
+    :monitor 1
+    :class "cal"
+    :geometry (
+        geometry
+            :x "5px"
+            :y "5px"
+            :width "15%"
+            :height "25px"
+            :anchor "top right"
+    )
+    :stacking "fg"
+    :reserve (struts :distance "40px" :side "top")
+    
+    (calendar)
+)
+
+(deflisten music :initial ""
+  "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
+
+(defpoll time :interval "10s"
+  "date '+%H:%M'")
+
+(defvar active 1)
+
+(defpoll volume_percent :interval "1s" "pamixer --get-volume")
+(defvar vol_reveal false)
+
+(defpoll muted :interval "0.5s" "pamixer --get-mute")
+
+(defvar power_reveal false)
