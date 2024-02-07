@@ -1,2 +1,3 @@
 alias open="~/.scripts/tmux.sh"
+alias switch="~/.scripts/switch.sh"
 alias cd="z"
