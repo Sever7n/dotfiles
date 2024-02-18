@@ -15,12 +15,14 @@ local function setup_dap()
 
     local function get_conf(t, p)
         return {
-            name = "Launch file",
-            type = t,
-            request = "launch",
-            program = p,
-            cwd = "${workspaceFolder}",
-            stopOnEntry = false,
+            {
+                name = "Launch file",
+                type = t,
+                request = "launch",
+                program = p,
+                cwd = "${workspaceFolder}",
+                stopOnEntry = false,
+            }
         }
     end
 
