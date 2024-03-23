@@ -1,0 +1,6 @@
+{
+    "diagnostics.globals": [
+        "setup_feline",
+        "vim"
+    ]
+}

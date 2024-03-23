@@ -1,4 +1,4 @@
 alias open="~/.scripts/tmux.sh"
 alias switch="~/.scripts/switch.sh"
 alias wofi="~/.scripts/wofi.sh"
-alias cd="z"
+alias set_select_session="touch /home/severin/.local/share/.select_session"

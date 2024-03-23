@@ -27,7 +27,7 @@ local function setup_dap()
     end
 
     local function get_rust_bin()
-       return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
+        return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/", "file")
     end
 
     local function get_bin()
@@ -45,6 +45,7 @@ end
 local function setup_dapui()
     local dap = require("dap")
     local dapui = require("dapui")
+    dapui.setup()
 
     dap.listeners.after.event_initialized["dapui_config"] = dapui.open
     dap.listeners.after.event_terminated["dapui_config"] = dapui.close
@@ -60,6 +61,6 @@ return {
     {
         "rcarriga/nvim-dap-ui",
         config = setup_dapui,
-        dependencies = { "mfussenegger/nvim-dap" },
+        dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
     }
 }

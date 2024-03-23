@@ -10,6 +10,7 @@ zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p
 zstyle :compinstall filename '/home/severin/.zshrc'
 
 autoload -Uz compinit
+fpath+=~/.zfunc
 compinit
 # End of lines added by compinstall
 # Lines configured by zsh-newuser-install
@@ -39,8 +40,23 @@ eval 'ssh-agent' &> /dev/null
 eval "$(starship init zsh)"
 eval "$(zoxide init zsh)"
 
+function ya() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
 term=$(tty | grep tty)
 if [[ $term != '' ]]
 then
-    Hyprland
+    if [ -e /home/severin/.local/share/.select_session ]
+    then
+        rm /home/severin/.local/share/.select_session
+        eval "$(grep Exec /usr/share/wayland-sessions/* | cut -d "=" -f 2 | fzf --layout=reverse-list -0 -1)"
+    else
+        Hyprland
+    fi
 fi

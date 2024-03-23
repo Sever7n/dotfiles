@@ -34,13 +34,18 @@ end
 
 return {
     {
+        "folke/neodev.nvim",
+        config = true,
+    },
+    {
         "neovim/nvim-lspconfig",
         config = setup_lsp,
+        dependencies = { "folke/neodev.nvim" },
     },
     {
         "williamboman/mason.nvim",
         config = true,
-        dependencies = { "neovim/nvim-lspconfig" }
+        dependencies = { "neovim/nvim-lspconfig" },
     },
     {
         "williamboman/mason-lspconfig",

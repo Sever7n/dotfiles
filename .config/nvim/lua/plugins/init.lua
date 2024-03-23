@@ -8,8 +8,15 @@ return {
     "tpope/vim-surround",
     "tpope/vim-eunuch",
 
+    "nvim-neotest/nvim-nio",
+
     {
         "windwp/nvim-autopairs",
+        config = true,
+    },
+
+    {
+        "stevearc/dressing.nvim",
         config = true,
     },
 }

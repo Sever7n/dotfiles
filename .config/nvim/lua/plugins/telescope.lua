@@ -1,7 +1,7 @@
 local telescope_opts = {
     defaults = {
         file_ignore_patterns = { "target/*" },
-    }
+    },
 }
 
 return {
