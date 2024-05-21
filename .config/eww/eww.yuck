@@ -31,7 +31,7 @@
         :halign "start"
         (app :app "firefox" :icon "")
         (app :app "alacritty" :icon "")
-        (app :app "index" :icon "")
+        (app :app "dolphin" :icon "")
         (app :app "kitty nvim" :icon "󱞁")
         (app :app "thunderbird" :icon "󰇮")
         (app :app "alacritty -e btop" :icon "󱃷")

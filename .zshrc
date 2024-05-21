@@ -57,6 +57,6 @@ then
         rm /home/severin/.local/share/.select_session
         eval "$(grep Exec /usr/share/wayland-sessions/* | cut -d "=" -f 2 | fzf --layout=reverse-list -0 -1)"
     else
-        Hyprland
+        Hyprland &> /dev/null
     fi
 fi
