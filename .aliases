@@ -2,3 +2,5 @@ alias open="~/.scripts/tmux.sh"
 alias switch="~/.scripts/switch.sh"
 alias wofi="~/.scripts/wofi.sh"
 alias set_select_session="touch /home/severin/.local/share/.select_session"
+alias ls='ls --color'
+alias select_session='eval "$(grep Exec /usr/share/wayland-sessions/* | cut -d "=" -f 2 | fzf --layout=reverse-list -0 -1)"'

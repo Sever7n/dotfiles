@@ -1,4 +1,10 @@
 return {
+    {
+        dir = "~/Programming/quest.nvim",
+        dependencies = { "nvim-telescope/telescope.nvim" },
+        config = true,
+    },
+
     "nvim-lua/plenary.nvim",
     "nvim-treesitter/nvim-treesitter",
 
