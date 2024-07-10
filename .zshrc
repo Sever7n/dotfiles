@@ -1,44 +1,49 @@
-# The following lines were added by compinstall
+eval "$(starship init zsh)"
 
-zstyle ':completion:*' completer _complete _ignored _correct _approximate
-zstyle ':completion:*' list-colors ''
-zstyle ':completion:*' list-prompt %SAt %p: Hit TAB for more, or the character to insert%s
-zstyle ':completion:*' matcher-list '' '+m:{[:lower:]}={[:upper:]} m:{[:lower:][:upper:]}={[:upper:][:lower:]}' '+r:|[._-]=** r:|=**' '+l:|=* r:|=*'
-zstyle ':completion:*' menu select=1
-zstyle ':completion:*' original true
-zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
-zstyle :compinstall filename '/home/severin/.zshrc'
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 
-autoload -Uz compinit
+if [ ! -d "$ZINIT_HOME" ]; then
+    mkdir -p "$(dirname $ZINIT_HOME)"
+    git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+source "${ZINIT_HOME}/zinit.zsh"
+
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
+zinit light zsh-users/zsh-autosuggestions
+zinit light Aloxaf/fzf-tab
+
+autoload -U compinit && compinit
 fpath+=~/.zfunc
-compinit
-# End of lines added by compinstall
-# Lines configured by zsh-newuser-install
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-setopt autocd extendedglob notify
-unsetopt beep
+
+zinit cdreplay -q
+
 bindkey -e
-# End of lines configured by zsh-newuser-install
 
-bindkey ";5C" forward-word
-bindkey ";5D" backward-word
-bindkey ";3C" forward-word
-bindkey ";3D" backward-word
-bindkey ";3~" delete-word
+HISTSIZE=5000
+HISTFILE=~/.histfile
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 
-export EDITOR=nvim
-export AUR=https://aur.archlinux.org
-export QT_QPA_PLATFORMTHEME=qt5ct
-export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
+zstyle ':completion:*' menu no
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
+zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 source ~/.aliases
 
-eval 'ssh-agent' &> /dev/null
-
-eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
+export EDITOR=nvim
+export AUR=https://aur.archlinux.org
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
 
 function ya() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXX")"
@@ -48,6 +53,10 @@ function ya() {
 	fi
 	rm -f -- "$tmp"
 }
+
+eval 'ssh-agent' &> /dev/null
+eval "$(fzf --zsh)"
+eval "$(zoxide init --cmd cd zsh)"
 
 term=$(tty | grep tty)
 if [[ $term != '' ]]

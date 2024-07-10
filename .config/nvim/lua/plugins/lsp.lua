@@ -8,6 +8,12 @@ local mason_opts = {
                 capabilities = capabilities
             })
         end,
+        ["rust_analyzer"] = function ()
+            local lspconfig = require("lspconfig")
+            lspconfig.rust_analyzer.setup {
+                capabilities = capabilities 
+            }
+        end
     }
 }
 
