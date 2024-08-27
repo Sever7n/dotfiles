@@ -41,6 +41,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 source ~/.aliases
 
+export PATH=$PATH:$HOME/.cargo/bin/
 export EDITOR=nvim
 export AUR=https://aur.archlinux.org
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"

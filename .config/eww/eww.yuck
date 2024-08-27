@@ -7,7 +7,7 @@
         geometry
             :x "0%"
             :y "5px"
-            :width "1910"
+            :width "1910px"
             :height "25px"
             :anchor "top center"
     )
@@ -74,7 +74,7 @@
         :orientation "h"
         :space-evenly false
         (volume)
-        (button :onclick "./eww_toggle cal" :class "time" time)
+        (button :onclick "./eww_toggle cal" :class "time" { formattime(EWW_TIME, "%k:%M")})
         (power)
     )
 )
@@ -99,7 +99,7 @@
         :space-evenly "false" :orientation "h" :spacing "3" 
         (button   :onclick click :onrightclick rightclick :class "icon" icon)
         (scale    :class "bar"
-            :value value
+            :value volume_percent
             :orientation "h"
 	          :max 101
 	          :min 0
@@ -144,8 +144,6 @@
 (deflisten music :initial ""
   "playerctl --follow metadata --format '{{ artist }} - {{ title }}' || true")
 
-(defpoll time :interval "10s"
-  "date '+%H:%M'")
 
 (defvar active 1)
 
@@ -155,3 +153,74 @@
 (defpoll muted :interval "0.5s" "pamixer --get-mute")
 
 (defvar power_reveal false)
+
+(defwindow back
+    :monitor 1
+    :geometry (
+        geometry
+            :x "0%"
+            :y "0%"
+            :width "100%"
+            :height "100%"
+            :anchor "top left"
+    )
+    :stacking "bottom"
+    :exclusive false
+    :focusable false
+    (clock :visible is_overlay)
+)
+
+(defwindow back_overlay
+    :monitor 1
+    :geometry (
+        geometry
+            :x "0%"
+            :y "0%"
+            :width "100%"
+            :height "100%"
+            :anchor "top left"
+    )
+    :stacking "overlay"
+    :exclusive false
+    :focusable false
+    (
+        button
+            :onclick "eww close back_overlay"
+            :onmiddleclick "eww close back_overlay"
+            :onrightclick "eww close back_overlay"
+            (clock :visible true)
+    )
+)
+
+(defwidget clock [visible]
+    (
+        box
+            :visible visible
+            :width "25%"
+            :height "33%"
+            :valign "start"
+            :halign "start"
+            :orientation "v"
+            :space-evenly false
+            (time)
+            (date)
+    )
+)
+
+(defwidget time []
+    (
+        box
+            :class "clock"
+            { formattime(EWW_TIME, "%k:%M") }
+    )
+)
+
+(defwidget date []
+    (
+        box
+            :class "date"
+            { formattime(EWW_TIME, "%e.%m.%Y")}
+    )
+)
+
+(defvar is_overlay true)
