@@ -1,4 +1,6 @@
-import = ["/home/severin/.config/alacritty/catppuccin/catppuccin-macchiato.toml"]
 
 [window]
 opacity = 0.8
+
+[general]
+import = ["/home/severin/.config/alacritty/catppuccin/catppuccin-macchiato.toml"]
