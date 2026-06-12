@@ -41,7 +41,7 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 source ~/.aliases
 
-export PATH=$PATH:$HOME/.cargo/bin/
+export PATH=$PATH:$HOME/.cargo/bin/:$HOME/.local/bin/
 export EDITOR=nvim
 export AUR=https://aur.archlinux.org
 export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
@@ -67,6 +67,6 @@ then
         rm /home/severin/.local/share/.select_session
         eval "$(grep Exec /usr/share/wayland-sessions/* | cut -d "=" -f 2 | fzf --layout=reverse-list -0 -1)"
     else
-        Hyprland &> /dev/null
+        start-hyprland &> /dev/null
     fi
 fi
