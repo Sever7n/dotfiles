@@ -1,18 +1,33 @@
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local blink = require("blink.cmp")
 local mason_opts = {
-    ensure_installed = { "rust_analyzer", "lua_ls" },
+    ensure_installed = { "rust_analyzer", "lua_ls", "ltex" },
     automatic_installation = true,
     handlers = {
         function(server)
+            local capabilities = blink.get_lsp_capabilities(server.capabilities)
             require("lspconfig")[server].setup({
                 capabilities = capabilities
             })
         end,
         ["rust_analyzer"] = function ()
-            local lspconfig = require("lspconfig")
-            lspconfig.rust_analyzer.setup {
-                capabilities = capabilities 
+            local lsp_config = require("lspconfig")
+            lsp_config.rust_analyzer.setup {
+                capabilities = blink.get_lsp_capabilities(lsp_config.capabilities)
             }
+        end,
+        ["ltex"] = function ()
+            local lsp_config = require("lspconfig")
+            lsp_config.ltex.setup({
+                capabilities = blink.get_lsp_capabilities(lsp_config.capabilities),
+                settings = {
+                    ltex = {
+                        language = "en",
+                        additionalRules = {
+                            languageModel = "~/.models/ngrams/"
+                        }
+                    }
+                }
+            })
         end
     }
 }
@@ -66,4 +81,8 @@ return {
         opts = mason_opts,
         dependencies = { "williamboman/mason.nvim" },
     },
+    {
+        "mfussenegger/nvim-jdtls",
+        dependencies = { "neovim/nvim-lspconfig" }
+    }
 }

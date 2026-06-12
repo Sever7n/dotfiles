@@ -22,6 +22,7 @@ map('n', '<F5>', dap.continue, {})
 map('n', '<F10>', dap.step_over, {})
 map('n', '<F11>', dap.step_into, {})
 map('n', '<F12>', dap.step_out, {})
+-- map('n', '<leader>td', require("dapui").toggle, {})
 
 local harpoon = require("harpoon")
 vim.keymap.set("n", "<leader>a", function() harpoon:list():add() end)

@@ -36,16 +36,16 @@ local function setup_cmp()
 end
 
 return {
-    {
-        "hrsh7th/nvim-cmp",
-        event = { "InsertEnter", "CmdlineEnter" },
-        config = setup_cmp,
-        dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "L3MON4D3/LuaSnip",
-            "saadparwaiz1/cmp_luasnip",
-        },
-    }
+    -- {
+    --     "hrsh7th/nvim-cmp",
+    --     event = { "InsertEnter", "CmdlineEnter" },
+    --     config = setup_cmp,
+    --     dependencies = {
+    --         "hrsh7th/cmp-nvim-lsp",
+    --         "hrsh7th/cmp-buffer",
+    --         "hrsh7th/cmp-path",
+    --         "L3MON4D3/LuaSnip",
+    --         "saadparwaiz1/cmp_luasnip",
+    --     },
+    -- }
 }
